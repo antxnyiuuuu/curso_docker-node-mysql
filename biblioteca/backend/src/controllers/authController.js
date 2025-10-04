@@ -18,21 +18,22 @@ async function loginUsuario(req, res) {
 
     }
     catch (error) {
-        res.status(500).json({message: error.message});
+        res.status(500).json({ message: error.message });
     }
 }
 
 async function logout(req, res) {
     const authHeader = req.headers.authorization;
-    if(!authHeader) return res.status(401).json({message: "No se proporciono el token"})
-    
+    if (!authHeader) return res.status(401).json({ message: "No se proporciono el token" })
+
     const token = authHeader.split(" ")[1];
-    if (!token) return res.status(401).json({message: "No se proporciono el token"})
+    if (!token) return res.status(401).json({ message: "No se proporciono el token" })
 
     await blacklistRepo.agregarToken(token);
-    res.json({message: "Usuario deslogeado correctamente"})
+    res.json({ message: "Usuario deslogeado correctamente" })
 
 }
+
 
 module.exports = {
     registrarUsuario,

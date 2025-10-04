@@ -1,8 +1,8 @@
 openapi: 3.0.0
-info: 
-  title: API de Biblioteca digital
+info:
+  title: API de Biblioteca Digital
   version: 1.0.0
-  description: API de bibliioteca con autenticación JWT
+  description: API de biblioteca con autenticación JWT
 
 servers:
   - url: http://localhost:3000
@@ -30,6 +30,12 @@ paths:
       responses:
         '201':
           description: Usuario registrado exitosamente
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: "Usuario registrado exitosamente"
         '500':
           description: Error del servidor
 
@@ -68,11 +74,9 @@ paths:
                 properties:
                   message:
                     type: string
-                    description: Mensaje de respuesta
                     example: "Usuario logueado correctamente"
                   data:
                     type: string
-                    description: Token JWT
                     example: "eyJhbGciOiJIUzI1..."
         '400':
           description: Error en los datos enviados
@@ -89,6 +93,82 @@ paths:
       responses:
         '200':
           description: Sesión cerrada exitosamente
+        '500':
+          description: Error del servidor
+
+  /api/libros:
+    get:
+      summary: Obtener libros
+      tags:
+        - Libros
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Libros obtenidos exitosamente
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                      example: 1
+                    titulo:
+                      type: string
+                      example: "Libro 1"
+                    autor:
+                      type: string
+                      example: "Autor 1"
+                    isbn:
+                      type: string
+                      example: "123-456-789"
+                    publicadoEn:
+                      type: string  
+                      example: "2022-01-01"
+        '500':
+          description: Error del servidor
+    post:
+      summary: Crear un nuevo libro
+      tags:
+        - Libros
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - titulo
+                - autor
+                - isbn
+                - publicadoEn
+              properties:
+                titulo:
+                  type: string
+                  example: "Nuevo Libro"
+                autor:
+                  type: string
+                  example: "Nuevo Autor"
+                isbn:
+                  type: string
+                  example: "987-654-321"
+                publicadoEn:
+                  type: string
+                  example: "2023-01-01"
+      responses:
+        '201':
+          description: Libro creado exitosamente
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: "Libro creado exitosamente"
         '500':
           description: Error del servidor
 

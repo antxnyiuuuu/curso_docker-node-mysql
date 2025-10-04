@@ -13,6 +13,10 @@ model Usuario {
   password  String
   roles     String    @default("usuario")
   libros    Libro[]
+
+  Prestamo Prestamo[]
+
+  Historial Historial[]
 }
 
 model Libro {
@@ -24,6 +28,31 @@ model Libro {
   disponible   Boolean  @default(true)
   usuarioId    Int
   usuario      Usuario @relation (fields: [usuarioId], references: [id])
+
+  Prestamo Prestamo[]
+
+  Historial Historial[]
+}
+
+model Prestamo {
+  id              Int      @id @default(autoincrement())
+  usuarioId       Int 
+  libroId         Int
+  fechaPrestamo   DateTime
+  fechaDevolucion DateTime
+  usuario        Usuario @relation (fields: [usuarioId], references: [id])
+  libro          Libro   @relation (fields: [libroId], references: [id])
+
+}
+
+model Historial {
+  id              Int      @id @default(autoincrement())
+  usuarioId       Int 
+  libroId         Int
+  fechaPrestamo   DateTime
+  fechaDevolucion DateTime
+  usuario         Usuario  @relation(fields: [usuarioId], references: [id]) 
+  libro           Libro  @relation(fields: [libroId], references: [id])
 }
 
 model TokenRevocado {

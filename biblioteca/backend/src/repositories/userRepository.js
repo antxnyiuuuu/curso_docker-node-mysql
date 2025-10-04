@@ -11,6 +11,8 @@ async function obtenerPorEmail(email) {
     return await prisma.usuario.findUnique({where: {email}});
 }
 
+
+
 module.exports = {
     crearUser,
     obtenerPorEmail
