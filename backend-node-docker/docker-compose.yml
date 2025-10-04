@@ -27,10 +27,15 @@ services:
       - "3000:3000"
     depends_on:
       - mysql
+    environment:
+      - DATABASE_URL=mysql://root:${DB_PASSWORD}@mysql:3306/${tareas_db}
+      - PORT=3000
+      - JWT_SECRET=mi_clave_secreta
     env_file:
-    - ./.env.test
+    - ./.env
     volumes: 
     - ./:/usr/src/app
+    - /usr/src/app/node_modules
 
 volumes:
   mysql_data:
