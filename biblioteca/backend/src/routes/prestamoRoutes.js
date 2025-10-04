@@ -5,6 +5,6 @@ const prestamoController = require('../controllers/prestamoController');
 
 router.post('/loans', verificarToken, prestamoController.postPrestamo);
 router.put('/loans/:id/return', verificarToken, prestamoController.updatePrestamo);
-router.get("/loans/history", verificarToken, prestamoController.getPrestamoHistory)
+router.get("/loans/history", verificarToken, prestamoController.verHisorialPorUsuario)
 
 module.exports = router;
